@@ -21,13 +21,18 @@ function App() {
         await fetch(api + "?q=" + city + "&units=metric&appid=" + api_key)
         .then(response => response.json())
         .then(data => {
-          console.log(data)
-          setData(data.main)
-          setWeather(data.weather)
-          setLocation("" + data.name + "," + data.sys.country)
-          e.target.value = ""
+          if(data.cod !== "404"){
+            setData(data.main)
+            setWeather(data.weather)
+            setLocation("" + data.name + "," + data.sys.country)
+            e.target.value = ""
+            setDisplay(true)
+          }
+          else{
+            alert("city not found")
+            e.target.value = ""
+          }
         })
-        .then( setDisplay(true))
       }
       else {
         alert("Please enter city name")
